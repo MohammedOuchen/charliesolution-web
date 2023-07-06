@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2>Nombre de sorties par jour par capteur</h2>
+    <h2>Liste des matériels dans la zone du chantier Charlie</h2>
     <table>
       <thead>
         <tr>
@@ -9,10 +9,10 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(sensorCount, index) in sensorCounts" :key="index">
-          <td>{{ sensorCount.date }}</td>
+        <tr v-for="(material, index) in materials" :key="index">
+          <td>{{ material.date }}</td>
           <td>
-            {{ sensorCount.sensor_count }}
+            {{ material.sensor_count }}
           </td>
         </tr>
       </tbody>
@@ -21,24 +21,21 @@
 </template>
 
 <script>
-import { mapActions, mapGetters  } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
   computed: {
-    ...mapGetters({
-     'sensorCounts': 'tracker/sensorCounts',
-    })
+    ...mapGetters('tracker', ['materials']),
   },
   mounted() {
-    this.fetchSensorCounts();
+    this.fetchMaterial();
   },
   methods: {
-    ...mapActions({
-      'fetchSensorCounts' : 'tracker/fetchSensorCounts'
-    }),
-  }
+    ...mapActions('tracker', ['fetchMaterial']),
+  },
 };
 </script>
+
 <style scoped>
 table {
   width: 100%;
